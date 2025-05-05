@@ -1,4 +1,3 @@
-// Register.js
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase"; // Make sure the Firebase setup is correct
@@ -6,22 +5,28 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 function Register() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [age, setAge] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // Check if passwords match
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
     try {
+      // Register the user with Firebase Authentication
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");  // Redirect to the dashboard after successful registration
+      // You can store user info like name and age in Firebase Firestore if needed.
+      // For now, just navigate to the dashboard
+      navigate("/dashboard");
     } catch (err) {
       alert(err.message);  // Show error message if registration fails
     }
@@ -51,6 +56,21 @@ function Register() {
         }}
       >
         <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Register</h2>
+
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            boxSizing: "border-box",
+          }}
+        />
 
         <input
           type="email"
@@ -87,6 +107,21 @@ function Register() {
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            boxSizing: "border-box",
+          }}
+        />
+
+        <input
+          type="number"
+          placeholder="Age"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
           style={{
             width: "100%",
             padding: "12px",
