@@ -14,22 +14,7 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    try {
-      // Register the user with Firebase Authentication
-      await createUserWithEmailAndPassword(auth, email, password);
-      // You can store user info like name and age in Firebase Firestore if needed.
-      // For now, just navigate to the dashboard
-      navigate("/dashboard");
-    } catch (err) {
-      alert(err.message);  // Show error message if registration fails
-    }
+    navigate("/dashboard");
   };
 
   return (
